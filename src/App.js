@@ -11,6 +11,8 @@ const App = () => {
     JSON.parse(localStorage.getItem('items')) || []
   );
 
+  const nodeRef = React.useRef(null);
+
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
   }, [items]);
@@ -21,6 +23,7 @@ const App = () => {
       newItem();
     }
   };
+
   const newItem = () => {
     if (item.trim() !== '') {
       const newItem = {
@@ -28,6 +31,7 @@ const App = () => {
         item,
         color: randomColor({ luminosity: 'light' }),
         defaultPos: { x: 100, y: 0 },
+        onTop: false,
       };
       setItems((items) => [...items, newItem]);
       setItem('');
@@ -46,6 +50,14 @@ const App = () => {
   const deleteNote = (itemId) => {
     setItems(items.filter((item) => item.id !== itemId));
   };
+
+  const bringOnTop = (itemId) => {
+    const newItems = [...items];
+    const newItem = newItems.find((el) => el.id === itemId);
+    newItem.onTop = !newItem.onTop;
+    setItems(newItems);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -58,8 +70,7 @@ const App = () => {
             onKeyPress={(event) => keypress(event)}
           />
           <button className="enter" onClick={newItem}>
-            {' '}
-            ENTER{' '}
+            ENTER
           </button>
         </div>
         {items.map((item, index) => {
@@ -67,11 +78,22 @@ const App = () => {
             <Draggable
               key={item.id}
               defaultPosition={item.defaultPos}
-              onStop={(e, data) => updatePos(data, index)}
+              onStop={(e, data) => {
+                updatePos(data, index);
+              }}
+              nodeRef={nodeRef}
+              // onClick={(event) => bringOnTop(item.id)}
             >
-              <div style={{ backgroundColor: item.color }} className="box">
+              <div
+                style={{ backgroundColor: item.color }}
+                className="box"
+                ref={nodeRef}
+              >
                 {`${item.item}`}
-                <button class="delete" onClick={(event) => deleteNote(item.id)}>
+                <button
+                  className="delete"
+                  onClick={(event) => deleteNote(item.id)}
+                >
                   X
                 </button>
               </div>

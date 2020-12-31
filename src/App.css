@@ -15,9 +15,13 @@
 
 .box {
   max-width: 300px;
+  min-width: 100px;
   opacity: 0.8;
   padding: 15px;
   margin: 2px;
+  overflow-wrap: break-word;
+  position: absolute;
+  cursor: move;
 }
 
 .delete {
@@ -31,19 +35,38 @@
 
 .search {
   background: transparent;
-  border: 1px solid #0005;
+  border: 1px solid #0008;
+  border-radius: 15px 0 0 15px;
   padding: 10px;
   color: #fff9;
+  font-size: inherit;
 }
 
 .enter {
-  background: #0005;
+  background: #0008;
+  border-radius: 0 15px 15px 0;
   color: #fff9;
   padding: 10px;
   cursor: pointer;
   border: transparent;
+  font-size: inherit;
 }
 
 .search-bar {
   display: flex;
+  font-size: 18px;
+}
+
+button:focus {
+  outline: none;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 4px 2px #0007;
+}
+
+.enter:hover {
+  background-color: rgba(33, 184, 33, 0.9);
+  color: rgba(0, 0, 0, 0.95);
 }
