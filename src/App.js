@@ -49,13 +49,19 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <input
-          value={item}
-          onChange={(event) => setItem(event.target.value)}
-          placeholder="Enter something..."
-          onKeyPress={(event) => keypress(event)}
-        />
-        <button onClick={newItem}> ENTER </button>
+        <div className="search-bar">
+          <input
+            className="search"
+            value={item}
+            onChange={(event) => setItem(event.target.value)}
+            placeholder="Enter something..."
+            onKeyPress={(event) => keypress(event)}
+          />
+          <button className="enter" onClick={newItem}>
+            {' '}
+            ENTER{' '}
+          </button>
+        </div>
         {items.map((item, index) => {
           return (
             <Draggable
@@ -65,7 +71,7 @@ const App = () => {
             >
               <div style={{ backgroundColor: item.color }} className="box">
                 {`${item.item}`}
-                <button id="delete" onClick={(event) => deleteNote(item.id)}>
+                <button class="delete" onClick={(event) => deleteNote(item.id)}>
                   X
                 </button>
               </div>

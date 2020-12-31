@@ -16,4 +16,34 @@
 .box {
   max-width: 300px;
   opacity: 0.8;
+  padding: 15px;
+  margin: 2px;
+}
+
+.delete {
+  background: transparent;
+  border: transparent;
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.search {
+  background: transparent;
+  border: 1px solid #0005;
+  padding: 10px;
+  color: #fff9;
+}
+
+.enter {
+  background: #0005;
+  color: #fff9;
+  padding: 10px;
+  cursor: pointer;
+  border: transparent;
+}
+
+.search-bar {
+  display: flex;
 }
