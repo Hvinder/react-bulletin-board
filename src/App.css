@@ -15,8 +15,8 @@
 
 .box {
   max-width: 300px;
-  min-width: 100px;
-  opacity: 0.8;
+  min-width: 50px;
+  opacity: 0.9;
   padding: 15px;
   margin: 2px;
   overflow-wrap: break-word;

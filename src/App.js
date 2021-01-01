@@ -51,13 +51,6 @@ const App = () => {
     setItems(items.filter((item) => item.id !== itemId));
   };
 
-  const bringOnTop = (itemId) => {
-    const newItems = [...items];
-    const newItem = newItems.find((el) => el.id === itemId);
-    newItem.onTop = !newItem.onTop;
-    setItems(newItems);
-  };
-
   return (
     <div className="App">
       <header className="App-header">
@@ -82,7 +75,6 @@ const App = () => {
                 updatePos(data, index);
               }}
               nodeRef={nodeRef}
-              // onClick={(event) => bringOnTop(item.id)}
             >
               <div
                 style={{ backgroundColor: item.color }}
