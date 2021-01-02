@@ -3,11 +3,18 @@ import { GoogleLogin } from 'react-google-login';
 import { clientId } from '../../utils/keys';
 import { refreshTokenSetup } from '../../utils/refreshToken';
 
-const Login = (props) => {
+const axios = require('axios').default;
 
+const Login = (props) => {
   const onSuccess = (res) => {
     props.setProfile(res.profileObj);
     console.log('{Login Success] currentUser: ', res.profileObj);
+    axios
+      .post('http://localhost:4200/user', {
+        email: res.profileObj.email,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     refreshTokenSetup(res);
   };
 

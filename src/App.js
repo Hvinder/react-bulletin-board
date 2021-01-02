@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import './App.css';
 
 const randomColor = require('randomcolor');
+const axios = require('axios').default;
 
 const App = () => {
   const [item, setItem] = useState('');
@@ -24,6 +25,10 @@ const App = () => {
     }
   };
 
+  const isEmptyObj = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  };
+
   const newItem = () => {
     if (item.trim() !== '') {
       const newItem = {
@@ -33,6 +38,15 @@ const App = () => {
         defaultPos: { x: 100, y: 0 },
       };
       setItems((items) => [...items, newItem]);
+      if (!isEmptyObj(profile)) {
+        axios
+          .post('http://localhost:4200/note', {
+            email: profile.email,
+            note: newItem,
+          })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      }
       setItem('');
     } else {
       alert('Enter an item');
@@ -77,10 +91,7 @@ const App = () => {
                 updatePos(data, index);
               }}
             >
-              <div
-                style={{ backgroundColor: item.color }}
-                className="box"
-              >
+              <div style={{ backgroundColor: item.color }} className="box">
                 {`${item.item}`}
                 <button
                   className="delete"
