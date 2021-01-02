@@ -39,8 +39,6 @@ const Header = (props) => {
     </div>
   );
 
-  // ---------------------------
-
   const [state, setState] = useState({
     mobileView: false,
     drawerOpen: false,
@@ -94,11 +92,6 @@ const Header = (props) => {
       <Toolbar className={toolbar}>
         {AppLogo}
         {profileStatus}
-        {/* <div>
-          <Button color="inherit" className={menuButton}>
-            Logout
-          </Button>
-        </div> */}
       </Toolbar>
     );
   };
@@ -128,11 +121,7 @@ const Header = (props) => {
             onClose: handleDrawerClose,
           }}
         >
-          <div className={drawerContainer}>
-            <Button color="inherit" className={menuButton}>
-              Logout
-            </Button>
-          </div>
+          <div className={drawerContainer}>{profileStatus}</div>
         </Drawer>
         <div>{AppLogo}</div>
       </Toolbar>
@@ -152,8 +141,6 @@ const Header = (props) => {
       </AppBar>
     </header>
   );
-  // ---------------------------
-  //   return profileStatus;
 };
 
 export default Header;

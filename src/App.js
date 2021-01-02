@@ -13,8 +13,6 @@ const App = () => {
   );
   const [profile, setProfile] = useState({});
 
-  const nodeRef = React.useRef(null);
-
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
   }, [items]);
@@ -33,7 +31,6 @@ const App = () => {
         item,
         color: randomColor({ luminosity: 'light' }),
         defaultPos: { x: 100, y: 0 },
-        onTop: false,
       };
       setItems((items) => [...items, newItem]);
       setItem('');
@@ -79,12 +76,10 @@ const App = () => {
               onStop={(e, data) => {
                 updatePos(data, index);
               }}
-              nodeRef={nodeRef}
             >
               <div
                 style={{ backgroundColor: item.color }}
                 className="box"
-                ref={nodeRef}
               >
                 {`${item.item}`}
                 <button
