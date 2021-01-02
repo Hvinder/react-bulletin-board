@@ -1,22 +1,18 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { clientId } from '../../keys/keys';
+import { clientId } from '../../utils/keys';
+import { refreshTokenSetup } from '../../utils/refreshToken';
 
 const Login = (props) => {
-//   let isLoggedIn = false;
-  let profileObj;
 
   const onSuccess = (res) => {
-    // isLoggedIn = true;
-    profileObj = res.profileObj;
-    props.setProfile(profileObj);
+    props.setProfile(res.profileObj);
     console.log('{Login Success] currentUser: ', res.profileObj);
+    refreshTokenSetup(res);
   };
 
   const onFailure = (res) => {
-    // isLoggedIn = false;
-    profileObj = {};
-    props.setProfile(profileObj);
+    props.setProfile({});
     console.log('[Login Failed] res: ', res);
   };
 

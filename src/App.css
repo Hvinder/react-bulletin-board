@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.App-header {
+.App-container {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -69,4 +69,7 @@ input:focus {
 .enter:hover {
   background-color: rgba(33, 184, 33, 0.9);
   color: rgba(0, 0, 0, 0.95);
+}
+.header {
+  background-color: #3d4452;
 }

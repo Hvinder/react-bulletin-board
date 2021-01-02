@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { v4 as uuidv4 } from 'uuid';
-import Login from './components/Login/Login';
-import Logout from './components/Logout/Logout';
+import Header from './components/header/Header';
 import './App.css';
 
 const randomColor = require('randomcolor');
@@ -54,20 +53,12 @@ const App = () => {
     setItems(items.filter((item) => item.id !== itemId));
   };
 
-  const isEmptyObj = (obj) => {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-  };
-
   return (
     <div className="App">
-      <div>
-        {isEmptyObj(profile) ? (
-          <Login setProfile={setProfile} />
-        ) : (
-          <Logout setProfile={setProfile} />
-        )}
-      </div>
-      <header className="App-header">
+      <header className="header">
+        <Header profile={profile} setProfile={setProfile} />
+      </header>
+      <header className="App-container">
         <div className="search-bar">
           <input
             className="search"

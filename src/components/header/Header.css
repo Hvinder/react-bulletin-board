@@ -1,0 +1,14 @@
+.profile-img {
+  width: 50px;
+  border-radius: 25px;
+}
+.loggedInState {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.profileStatus {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
