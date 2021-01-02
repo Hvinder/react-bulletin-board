@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { v4 as uuidv4 } from 'uuid';
+import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 import './App.css';
 
 const randomColor = require('randomcolor');
@@ -10,6 +12,7 @@ const App = () => {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem('items')) || []
   );
+  const [profile, setProfile] = useState({});
 
   const nodeRef = React.useRef(null);
 
@@ -51,8 +54,19 @@ const App = () => {
     setItems(items.filter((item) => item.id !== itemId));
   };
 
+  const isEmptyObj = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+  };
+
   return (
     <div className="App">
+      <div>
+        {isEmptyObj(profile) ? (
+          <Login setProfile={setProfile} />
+        ) : (
+          <Logout setProfile={setProfile} />
+        )}
+      </div>
       <header className="App-header">
         <div className="search-bar">
           <input
