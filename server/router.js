@@ -58,6 +58,26 @@ router.post('/note', (req, res) => {
   });
 });
 
+router.delete('/note', (req, res) => {
+  const noteId = req.body.id;
+  const userEmail = req.body.email;
+  Users.findOne({ email: userEmail }, (err, data) => {
+    if (err) {
+      res.status(404).send({ message: 'User not found' });
+    } else {
+      const updatedNotes = data.notes.filter((note) => note.id !== noteId);
+      data.notes = updatedNotes;
+      Users.findOneAndUpdate({ _id: data._id }, data, (err) => {
+        if (err) {
+          res.status(400).send({ message: 'Something went wrong!' });
+        } else {
+          res.status(200).send({ message: 'Note removed!' });
+        }
+      });
+    }
+  });
+});
+
 router.post('/allNotes', (req, res) => {
   const userEmail = req.body.email;
   Users.findOne({ email: userEmail }, (err, data) => {

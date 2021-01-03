@@ -57,15 +57,34 @@ const App = () => {
     }
   };
 
+  const removeNoteFromProfile = (noteId) => {
+    if (!isEmptyObj(profile)) {
+      axios
+        .delete('http://localhost:4200/note', {
+          data: { email: profile.email, id: noteId },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  };
+
   const updatePos = (data, index) => {
-    const updatedItems = [...items];
-    updatedItems[index].defaultPos = { x: data.x, y: data.y };
-    addNewNoteToProfile(updatedItems[index]);
-    setItems(updatedItems);
+    if (
+      !(
+        items[index].defaultPos.x === data.x &&
+        items[index].defaultPos.y === data.y
+      )
+    ) {
+      const updatedItems = [...items];
+      updatedItems[index].defaultPos = { x: data.x, y: data.y };
+      addNewNoteToProfile(updatedItems[index]);
+      setItems(updatedItems);
+    }
   };
 
   const deleteNote = (itemId) => {
     setItems(items.filter((item) => item.id !== itemId));
+    removeNoteFromProfile(itemId);
   };
 
   const loggedOutHandler = () => {
@@ -75,7 +94,12 @@ const App = () => {
   return (
     <div className="App">
       <header className="header">
-        <Header profile={profile} setProfile={setProfile} setItems={setItems} loggedOutHandler={loggedOutHandler}/>
+        <Header
+          profile={profile}
+          setProfile={setProfile}
+          setItems={setItems}
+          loggedOutHandler={loggedOutHandler}
+        />
       </header>
       <header className="App-container">
         <div className="search-bar">
