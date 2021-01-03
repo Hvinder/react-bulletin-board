@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { v4 as uuidv4 } from 'uuid';
 import Header from './components/header/Header';
+import { isEmptyObj } from './utils/utils';
 import './App.css';
 
 const randomColor = require('randomcolor');
@@ -15,7 +16,9 @@ const App = () => {
   const [profile, setProfile] = useState({});
 
   useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(items));
+    if (isEmptyObj(profile)) {
+      localStorage.setItem('items', JSON.stringify(items));
+    }
   }, [items]);
 
   const keypress = (event) => {
@@ -23,10 +26,6 @@ const App = () => {
     if (code === 13) {
       newItem();
     }
-  };
-
-  const isEmptyObj = (obj) => {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
   };
 
   const newItem = () => {
@@ -38,15 +37,7 @@ const App = () => {
         defaultPos: { x: 100, y: 0 },
       };
       setItems((items) => [...items, newItem]);
-      if (!isEmptyObj(profile)) {
-        axios
-          .post('http://localhost:4200/note', {
-            email: profile.email,
-            note: newItem,
-          })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-      }
+      addNewNoteToProfile(newItem);
       setItem('');
     } else {
       alert('Enter an item');
@@ -54,9 +45,22 @@ const App = () => {
     }
   };
 
+  const addNewNoteToProfile = (note) => {
+    if (!isEmptyObj(profile)) {
+      axios
+        .post('http://localhost:4200/note', {
+          email: profile.email,
+          note,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  };
+
   const updatePos = (data, index) => {
     const updatedItems = [...items];
     updatedItems[index].defaultPos = { x: data.x, y: data.y };
+    addNewNoteToProfile(updatedItems[index]);
     setItems(updatedItems);
   };
 
@@ -64,10 +68,14 @@ const App = () => {
     setItems(items.filter((item) => item.id !== itemId));
   };
 
+  const loggedOutHandler = () => {
+    setItems(JSON.parse(localStorage.getItem('items')) || []);
+  };
+
   return (
     <div className="App">
       <header className="header">
-        <Header profile={profile} setProfile={setProfile} />
+        <Header profile={profile} setProfile={setProfile} setItems={setItems} loggedOutHandler={loggedOutHandler}/>
       </header>
       <header className="App-container">
         <div className="search-bar">
@@ -82,27 +90,28 @@ const App = () => {
             ENTER
           </button>
         </div>
-        {items.map((item, index) => {
-          return (
-            <Draggable
-              key={item.id}
-              defaultPosition={item.defaultPos}
-              onStop={(e, data) => {
-                updatePos(data, index);
-              }}
-            >
-              <div style={{ backgroundColor: item.color }} className="box">
-                {`${item.item}`}
-                <button
-                  className="delete"
-                  onClick={(event) => deleteNote(item.id)}
-                >
-                  X
-                </button>
-              </div>
-            </Draggable>
-          );
-        })}
+        {items &&
+          items.map((item, index) => {
+            return (
+              <Draggable
+                key={item.id}
+                defaultPosition={item.defaultPos}
+                onStop={(e, data) => {
+                  updatePos(data, index);
+                }}
+              >
+                <div style={{ backgroundColor: item.color }} className="box">
+                  {`${item.item}`}
+                  <button
+                    className="delete"
+                    onClick={(event) => deleteNote(item.id)}
+                  >
+                    X
+                  </button>
+                </div>
+              </Draggable>
+            );
+          })}
       </header>
     </div>
   );

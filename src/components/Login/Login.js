@@ -13,7 +13,10 @@ const Login = (props) => {
       .post('http://localhost:4200/user', {
         email: res.profileObj.email,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        props.setItems(res.data.notes);
+        console.log(res);
+      })
       .catch((err) => console.log(err));
     refreshTokenSetup(res);
   };

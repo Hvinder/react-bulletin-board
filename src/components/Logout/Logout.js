@@ -6,6 +6,7 @@ import './Logout.css';
 const Logout = (props) => {
   const onSuccess = () => {
     props.setProfile({});
+    props.loggedOutHandler();
     alert('Successfully logged out!');
   };
 

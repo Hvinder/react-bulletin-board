@@ -4,23 +4,19 @@ import {
   Toolbar,
   Typography,
   makeStyles,
-  Button,
   IconButton,
   Drawer,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Login from '../Login/Login';
 import Logout from '../Logout/Logout';
+import { isEmptyObj } from '../../utils/utils';
 import './Header.css';
 
 const Header = (props) => {
-  const isEmptyObj = (obj) => {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
-  };
-
   const loggedInState = (
     <div className="loggedInState">
-      <Logout setProfile={props.setProfile} />
+      <Logout setProfile={props.setProfile} loggedOutHandler={props.loggedOutHandler}/>
       <img
         src={props.profile.imageUrl}
         className="profile-img"
@@ -32,7 +28,7 @@ const Header = (props) => {
   const profileStatus = (
     <div className="profileStatus">
       {isEmptyObj(props.profile) ? (
-        <Login setProfile={props.setProfile} />
+        <Login setProfile={props.setProfile} setItems={props.setItems}/>
       ) : (
         loggedInState
       )}
