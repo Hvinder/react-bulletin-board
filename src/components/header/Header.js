@@ -133,7 +133,8 @@ const Header = (props) => {
   return (
     <header>
       <AppBar className={header}>
-        {mobileView ? displayMobile() : displayDesktop()}
+        {/* {mobileView ? displayMobile() : displayDesktop()} */}
+        {displayDesktop()}
       </AppBar>
     </header>
   );

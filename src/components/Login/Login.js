@@ -1,9 +1,11 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { clientId } from '../../utils/keys';
 import { refreshTokenSetup } from '../../utils/refreshToken';
 
 const axios = require('axios').default;
+// Add your Google Client ID here
+// I've added it using .env file in root but you can use any other method
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = (props) => {
   const onSuccess = (res) => {
