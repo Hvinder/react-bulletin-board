@@ -1,11 +1,22 @@
 # Run Project
 ## Start the server
+Add your mongoDB url in a .env file inside /server/ before starting your server
+e.g. 
+```
+MONGO_URL=mongodb+srv://<username>:<password>@cluster0.ljicm.mongodb.net/<project_name>?retryWrites=true&w=majority
+ # .env
+```
 ```bash
 cd server
 npm install # Run before starting for the first time
 node app.js
 ```
 ## Start the application
+Add your Google client ID in a .env file inside your root directory before starting your application
+e.g. 
+```
+REACT_APP_GOOGLE_CLIENT_ID=<client_id>.apps.googleusercontent.com # .env
+```
 ```bash
 cd .. # if inside server directory
 npm install # Run before starting for the first time
