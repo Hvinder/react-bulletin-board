@@ -1,3 +1,18 @@
+# Run Project
+## Start the server
+```bash
+cd server
+npm install # Run before starting for the first time
+node app.js
+```
+## Start the application
+```bash
+cd .. # if inside server directory
+npm install # Run before starting for the first time
+npm start
+```
+Remember to add your respective API keys in src/utils/keys.js and server/utils/keys
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
